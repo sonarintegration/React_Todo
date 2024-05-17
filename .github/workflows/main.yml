@@ -77,3 +77,20 @@ jobs:
         with:
           name: build
           path: build/
+
+      - name: Static Code Analysis for React.js
+        uses: sonarsource/sonarqube-scan-action@v2
+        with:
+         projectBaseDir: .
+         args: >
+          -Dsonar.organization=sonarintegration-1
+          -Dsonar.projectKey=sonarintegration-1_react-todo
+          -Dsonar.sources=src/
+          -Dsonar.host.url=https://sonarcloud.io
+          -Dsonar.projectName=React_Todo
+          -Dsonar.projectVersion=1.0
+          -Dsonar.sourceEncoding=UTF-8
+          -Dsonar.exclusions=**/*.test.js,**/__tests__/**
+        env:
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+            SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
