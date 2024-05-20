@@ -135,9 +135,9 @@ jobs:
           echo "always-auth=true" >> ~/.npmrc
 
       - name: Push Artifacts to JFrog
-        run: npm publish --registry https://shubhamtodo.jfrog.io/artifactory/api/npm/react_todo-npm/ --_authToken="${JFROG_AUTH_TOKEN}"
+        run: npm publish --registry https://shubhamtodo.jfrog.io/artifactory/api/npm/react_todo-npm/ --_authToken="$(echo ${JFROG_AUTH_TOKEN} | base64 -d)"
         env:
-          JFROG_AUTH_TOKEN: ${{ secrets.JFROG_AUTH_TOKEN }}
+           JFROG_AUTH_TOKEN: ${{ secrets.JFROG_AUTH_TOKEN }}
 
 
 
