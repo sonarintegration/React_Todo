@@ -129,7 +129,7 @@ jobs:
          
       - name: Authenticate with JFrog
         run: |
-          npm login --registry=https://shubhamtodo.jfrog.io/artifactory/api/npm/react_todo-npm/ --auth-type=legacy
+          npm login --registry=https://shubhamtodo.jfrog.io/artifactory/react_todo-npm-local/ --auth-type=legacy
 
       - name: Publish Artifacts to JFrog
         run: npm publish --registry https://shubhamtodo.jfrog.io/artifactory/react_todo-npm-local/
