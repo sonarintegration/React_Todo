@@ -84,6 +84,17 @@ jobs:
       - name: Print Snyk report
         run: cat snyk.sarif     
 
+      - name: Convert SARIF to HTML
+        run: |
+          npm install -g sarif-converter
+          sarif-converter convert -t html -o snyk_report.html snyk.sarif
+
+      - name: Upload SARIF report
+        uses: actions/upload-artifact@v2
+        with:
+         name: snyk_report_html
+         path: snyk_report.html
+
       - name: Run Trivy vulnerability scanner in repo mode
         uses: aquasecurity/trivy-action@master
         with:
