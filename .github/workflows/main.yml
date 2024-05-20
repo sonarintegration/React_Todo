@@ -47,10 +47,10 @@ jobs:
           category: my-analysis-tool
 
       - name: Convert SARIF to HTML
-        uses: snyk/sarif-action@v1
+        uses: sebastianpopp/sarif2html-action@v1
         with:
-         sarif_file: snyk.sarif
-         output_file: snyk-report.html
+         input: snyk.sarif
+         output: snyk-report.html
 
       - name: Upload HTML report as artifact
         uses: actions/upload-artifact@v2
