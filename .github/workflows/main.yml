@@ -47,7 +47,10 @@ jobs:
           category: my-analysis-tool
 
       - name: Convert SARIF to HTML
-        run: npx sarif-web-component snyk.sarif snyk-report.html
+        uses: snyk/sarif-action@v1
+        with:
+         sarif_file: snyk.sarif
+         output_file: snyk-report.html
 
       - name: Upload HTML report as artifact
         uses: actions/upload-artifact@v2
