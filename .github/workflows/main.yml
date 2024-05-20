@@ -47,6 +47,9 @@ jobs:
           name: snyk-report
           path: snyk-report.html
 
+      - name: Fix vulnerabilities
+        run: npx snyk wizard --fail-on patchable
+
       # - name: Run Snyk to check for vulnerabilities
       #   uses: snyk/actions/node@master
       #   continue-on-error: true
