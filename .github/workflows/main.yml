@@ -37,9 +37,10 @@ jobs:
         run: npm install -g snyk-to-html
 
       - name: Convert JSON report to HTML
-        run: snyk-to-html -i snyk-report.json -o snyk-report.html
+        run: /path/to/snyk-to-html -i snyk-report.json -o snyk-report.html
         env:
-          PATH: ${{ github.workspace }}/node_modules/.bin:$PATH
+         PATH: ${{ github.workspace }}/node_modules/.bin:$PATH
+
 
       - name: Upload HTML report
         uses: actions/upload-artifact@v3
