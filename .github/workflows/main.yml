@@ -128,8 +128,6 @@ jobs:
          chmod +x jfrog
          mv jfrog /usr/local/bin/
          
-      - name: Configure JFrog CLI
-         npm login --registry=https://shubhamtodo.jfrog.io/artifactory/api/npm/react_todo-npm/ --auth-type=web
        
       - name: Push Artifacts to JFrog
         run: |
