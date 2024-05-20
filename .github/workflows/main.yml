@@ -13,12 +13,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      security-events: write
+    # permissions:
+    #   security-events: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+         path: ~/.npm # or wherever your dependencies are stored
+         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+         restore-keys: | 
+          ${{ runner.os }}-node-
         
       - name: Install Snyk
         run: npm install -g snyk
