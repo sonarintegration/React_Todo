@@ -133,9 +133,9 @@ jobs:
           echo "email=shubhamchav@cybage.com" >> ~/.npmrc
           echo "always-auth=true" >> ~/.npmrc
 
-      - name: Publish Artifacts to JFrog
-        run: |
-          echo "//shubhamtodo.jfrog.io/artifactory/react_todo-npm-local/:_authToken=${{ secrets.JFROG_AUTH_TOKEN }}" >> ~/.npmrc
-          echo "email=shubhamchav@cybage.com" >> ~/.npmrc
-          echo "always-auth=true" >> ~/.npmrc
-          npm publish --registry https://shubhamtodo.jfrog.io/artifactory/react_todo-npm-local/
+      # - name: Publish Artifacts to JFrog
+      #   run: |
+      #     echo "//shubhamtodo.jfrog.io/artifactory/react_todo-npm-local/:_authToken=${{ secrets.JFROG_AUTH_TOKEN }}" >> ~/.npmrc
+      #     echo "email=shubhamchav@cybage.com" >> ~/.npmrc
+      #     echo "always-auth=true" >> ~/.npmrc
+      #     npm publish --registry https://shubhamtodo.jfrog.io/artifactory/react_todo-npm-local/
