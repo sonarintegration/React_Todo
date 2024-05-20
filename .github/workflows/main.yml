@@ -48,10 +48,11 @@ jobs:
         
       - name: Convert JSON report to HTML
         run: |
-         cd React_Todo/React_Todo
+         cd $GITHUB_WORKSPACE/React_Todo/React_Todo
          snyk-to-html -i snyk-report.json -o snyk-report.html
         env:
-         PATH: ./node_modules/.bin:$PATH
+         PATH: $GITHUB_WORKSPACE/React_Todo/React_Todo/node_modules/.bin:$PATH
+
 
 
       - name: Upload HTML report
