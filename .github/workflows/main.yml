@@ -50,14 +50,10 @@ jobs:
         run: cat snyk.sarif     
 
       - name: Convert SARIF to HTML
-        run: |
-         npm install -g sarif-converter
-         if [ $? -eq 0 ]; then
-         sarif-converter convert -t html -o snyk_report.html snyk.sarif
-         else
-         echo "Failed to install sarif-converter. Exiting..."
-          exit 1
-          fi
+        uses: github/codeql-action/sarif-converter@v1
+        with:
+         input: snyk.sarif
+         output: snyk_report.html
  
 
       - name: Upload SARIF report
