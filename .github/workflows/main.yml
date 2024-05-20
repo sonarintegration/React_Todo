@@ -135,7 +135,7 @@ jobs:
           echo "always-auth=true" >> ~/.npmrc
 
       - name: Push Artifacts to JFrog
-        run: npm publish --registry https://shubhamtodo.jfrog.io/artifactory/gotodo-go/:_authToken=c2h1YmhhbWNoYXZAY3liYWdlLmNvbTpjbVZtZEd0dU9qQXhPakUzTkRjM01qTTJNamM2TjB0UU9GcDBVamR4VDNGMmFFbGpTRTl2WmtWdlZERnFWR2RN
+        run: npm publish --registry https://shubhamtodo.jfrog.io/artifactory/react_todo-npm-local/:_authToken=c2h1YmhhbWNoYXZAY3liYWdlLmNvbTpjbVZtZEd0dU9qQXhPakUzTkRjM01qTTJNamM2TjB0UU9GcDBVamR4VDNGMmFFbGpTRTl2WmtWdlZERnFWR2RN
 
 
 
