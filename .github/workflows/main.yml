@@ -129,13 +129,9 @@ jobs:
          mv jfrog /usr/local/bin/
          
       - name: Configure JFrog CLI
-        env:
-         ARTIFACTORY_URL: ${{ secrets.ARTIFACTORY_URL }}
-         ARTIFACTORY_USER: ${{ secrets.ARTIFACTORY_USER }}
-         ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: |
-         jfrog config add rt-server --artifactory-url $ARTIFACTORY_URL --user $ARTIFACTORY_USER --password $ARTIFACTORY_PASSWORD --interactive=false
-     
+         npm login --registry=https://shubhamtodo.jfrog.io/artifactory/api/npm/react_todo-npm/ --auth-type=web
+       
       - name: Push Artifacts to JFrog
         run: |
-          jfrog rt u  gitjfrog-libs-snapshot-local/ --url=https://shubhamtodo.jfrog.io/artifactory/gotodo-go-local/ --access-token=
+         npm publish --registry https://shubhamtodo.jfrog.io/artifactory/api/npm/react_todo-npm/
+
