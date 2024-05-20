@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - master
+      - feature
+  pull_request:
+    branches:
+      - master
+      - feature
 
 jobs:
   build:
@@ -116,3 +121,21 @@ jobs:
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Install JFrog CLI
+        run: |
+         curl -fL https://getcli.jfrog.io | sh
+         chmod +x jfrog
+         mv jfrog /usr/local/bin/
+         
+      - name: Configure JFrog CLI
+        env:
+         ARTIFACTORY_URL: ${{ secrets.ARTIFACTORY_URL }}
+         ARTIFACTORY_USER: ${{ secrets.ARTIFACTORY_USER }}
+         ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        run: |
+         jfrog config add rt-server --artifactory-url $ARTIFACTORY_URL --user $ARTIFACTORY_USER --password $ARTIFACTORY_PASSWORD --interactive=false
+     
+      - name: Push Artifacts to JFrog
+        run: |
+          jfrog rt u  gitjfrog-libs-snapshot-local/ --url=https://shubhamtodo.jfrog.io/artifactory/gotodo-go-local/ --access-token=
