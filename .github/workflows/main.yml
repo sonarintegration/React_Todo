@@ -43,13 +43,14 @@ jobs:
         
       - name: Install snyk-to-html
         run: npm install -g snyk-to-html
+        
       - name: List contents of /home/runner/work
-        run: ls -la /home/runner/work
+        run: ls -la /home/runner/work/React_Todo/React_Todo
         
       - name: Convert JSON report to HTML
         run: snyk-to-html -i snyk-report.json -o snyk-report.html
         env:
-         PATH: snyk-report.html
+         PATH: ./snyk-report.html
 
 
 
