@@ -136,5 +136,9 @@ jobs:
 
       - name: Push Artifacts to JFrog
         run: |
+         npm config set '//shubhamtodo.jfrog.io/artifactory/api/npm/react_todo-npm/:_authToken' "${JFROG_AUTH_TOKEN}"
          npm publish --registry https://shubhamtodo.jfrog.io/artifactory/api/npm/react_todo-npm/
+         env:
+          JFROG_AUTH_TOKEN: ${{ secrets.JFROG_AUTH_TOKEN }}
+
 
