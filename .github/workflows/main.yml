@@ -23,10 +23,10 @@ jobs:
       - name: Cache dependencies
         uses: actions/cache@v2
         with:
-         path: ~/.npm # or wherever your dependencies are stored
-         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-         restore-keys: | 
-          ${{ runner.os }}-node-
+          path: ~/.npm # or wherever your dependencies are stored
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
@@ -45,22 +45,18 @@ jobs:
         with:
           sarif_file: snyk.sarif
           category: my-analysis-tool
-        
-      - name: Print Snyk report
-        run: cat snyk.sarif     
 
       - name: Convert SARIF to HTML
-        uses: github/codeql-action/sarif-converter@v1
-        with:
-         input: snyk.sarif
-         output: snyk_report.html
- 
+        run: npx sarif-web-component snyk.sarif snyk-report.html
 
-      - name: Upload SARIF report
+      - name: Upload HTML report as artifact
         uses: actions/upload-artifact@v2
         with:
-         name: snyk_report_html
-         path: snyk_report.html
+          name: snyk-report
+          path: snyk-report.html
+
+      - name: Print Snyk report
+        run: cat snyk.sarif
 
       - name: Run Trivy vulnerability scanner in repo mode
         uses: aquasecurity/trivy-action@master
@@ -147,16 +143,9 @@ jobs:
           curl -fL https://getcli.jfrog.io | sh
           chmod +x jfrog
           mv jfrog /usr/local/bin/
-         
+
       - name: Configure npm Authentication
         run: |
           echo "//shubhamtodo.jfrog.io/artifactory/react_todo-npm-local/:_authToken=${{ secrets.JFROG_AUTH_TOKEN }}" >> ~/.npmrc
           echo "email=shubhamchav@cybage.com" >> ~/.npmrc
           echo "always-auth=true" >> ~/.npmrc
-
-      # - name: Publish Artifacts to JFrog
-      #   run: |
-      #     echo "//shubhamtodo.jfrog.io/artifactory/react_todo-npm-local/:_authToken=${{ secrets.JFROG_AUTH_TOKEN }}" >> ~/.npmrc
-      #     echo "email=shubhamchav@cybage.com" >> ~/.npmrc
-      #     echo "always-auth=true" >> ~/.npmrc
-      #     npm publish --registry https://shubhamtodo.jfrog.io/artifactory/react_todo-npm-local/
