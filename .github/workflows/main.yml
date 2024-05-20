@@ -44,13 +44,12 @@ jobs:
       - name: Run Trivy vulnerability scanner in repo mode
         uses: aquasecurity/trivy-action@master
         with:
-           scan-type: 'fs'
-           ignore-unfixed: true
-           format: 'sarif'
-           output: 'trivy-results.sarif'
-           severity: 'CRITICAL'
+          scan-type: 'fs'
+          ignore-unfixed: true
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL'
 
- 
       - name: Run Trivy in GitHub SBOM mode and submit results to Dependency Graph
         uses: aquasecurity/trivy-action@master
         with:
@@ -59,7 +58,7 @@ jobs:
           output: 'dependency-results.sbom.json'
           image-ref: '.'
           github-pat: ${{ secrets.GH_TOKEN }}
- 
+
       - name: Create coverage artifact
         uses: actions/upload-artifact@v2
         with:
@@ -86,19 +85,19 @@ jobs:
       - name: Static Code Analysis for React.js
         uses: sonarsource/sonarqube-scan-action@v2
         with:
-         projectBaseDir: .
-         args: >
-          -Dsonar.organization=sonarintegration-1
-          -Dsonar.projectKey=sonarintegration-1_react-todo
-          -Dsonar.sources=src/
-          -Dsonar.host.url=https://sonarcloud.io
-          -Dsonar.projectName=React_Todo
-          -Dsonar.projectVersion=1.0
-          -Dsonar.sourceEncoding=UTF-8
-          -Dsonar.exclusions=**/*.test.js,**/__tests__/**
+          projectBaseDir: .
+          args: >
+            -Dsonar.organization=sonarintegration-1
+            -Dsonar.projectKey=sonarintegration-1_react-todo
+            -Dsonar.sources=src/
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.projectName=React_Todo
+            -Dsonar.projectVersion=1.0
+            -Dsonar.sourceEncoding=UTF-8
+            -Dsonar.exclusions=**/*.test.js,**/__tests__/**
         env:
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-            SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
       - name: Send notification on Slack using Webhooks - Success
         if: ${{ always() }}
@@ -124,21 +123,15 @@ jobs:
 
       - name: Install JFrog CLI
         run: |
-         curl -fL https://getcli.jfrog.io | sh
-         chmod +x jfrog
-         mv jfrog /usr/local/bin/
+          curl -fL https://getcli.jfrog.io | sh
+          chmod +x jfrog
+          mv jfrog /usr/local/bin/
          
-      - name: Install JFrog CLI
-  run: |
-    curl -fL https://getcli.jfrog.io | sh
-    chmod +x jfrog
-    mv jfrog /usr/local/bin/
-    
-    - name: Configure npm Authentication
-      run: |
-      echo "//shubhamtodo.jfrog.io/artifactory/react_todo-npm-local/:_authToken=${{ secrets.JFROG_AUTH_TOKEN }}" >> ~/.npmrc
-      echo "email=shubhamchav@cybage.com" >> ~/.npmrc
-      echo "always-auth=true" >> ~/.npmrc
+      - name: Configure npm Authentication
+        run: |
+          echo "//shubhamtodo.jfrog.io/artifactory/react_todo-npm-local/:_authToken=${{ secrets.JFROG_AUTH_TOKEN }}" >> ~/.npmrc
+          echo "email=shubhamchav@cybage.com" >> ~/.npmrc
+          echo "always-auth=true" >> ~/.npmrc
 
-    - name: Push Artifacts to JFrog
-      run: npm publish --registry https://shubhamtodo.jfrog.io/artifactory/react_todo-npm-local/
+      - name: Push Artifacts to JFrog
+        run: npm publish --registry https://shubhamtodo.jfrog.io/artifactory/react_todo-npm-local/
