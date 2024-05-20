@@ -128,13 +128,17 @@ jobs:
          chmod +x jfrog
          mv jfrog /usr/local/bin/
          
-      - name: Configure JFrog CLI
-        run: |
-         echo "https://shubhamtodo.jfrog.io/artifactory/react_todo-npm-local/:_authToken=${JFROG_AUTH_TOKEN}" >> ~/.npmrc
-         echo "email=shubhamchav@cybage.com" >> ~/.npmrc
-         echo "always-auth=true" >> ~/.npmrc
+      - name: Install JFrog CLI
+  run: |
+    curl -fL https://getcli.jfrog.io | sh
+    chmod +x jfrog
+    mv jfrog /usr/local/bin/
+    
+    - name: Configure npm Authentication
+      run: |
+      echo "//shubhamtodo.jfrog.io/artifactory/react_todo-npm-local/:_authToken=${{ secrets.JFROG_AUTH_TOKEN }}" >> ~/.npmrc
+      echo "email=shubhamchav@cybage.com" >> ~/.npmrc
+      echo "always-auth=true" >> ~/.npmrc
 
-      - name: Push Artifacts to JFrog
-        run: npm publish --registry https://shubhamtodo.jfrog.io/artifactory/react_todo-npm-local/
-        env:
-         JFROG_AUTH_TOKEN: ${{ secrets.JFROG_AUTH_TOKEN }}
+    - name: Push Artifacts to JFrog
+      run: npm publish --registry https://shubhamtodo.jfrog.io/artifactory/react_todo-npm-local/
