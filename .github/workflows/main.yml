@@ -27,41 +27,6 @@ jobs:
          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
          restore-keys: | 
           ${{ runner.os }}-node-
-        
-      # - name: Install Snyk
-      #   run: npm install -g snyk
-        
-      # - name: Authenticate Snyk
-      #   run: snyk auth ${{ secrets.SNYK_TOKEN }}
-
-      # - name: Test and Monitor Dependencies
-      #   run: snyk test
-      #   continue-on-error: true
-        
-      # - name: Test and Monitor Dependencies
-      #   run: snyk test --json > snyk-report.json || true
-        
-      # - name: Install snyk-to-html
-      #   run: npm install -g snyk-to-html
-        
-      # - name: List contents of /home/runner/work
-      #   run: ls -la /home/runner/work/React_Todo/React_Todo
-        
-      # - name: Convert JSON report to HTML
-      #   run: snyk-to-html -i snyk-report.json -o snyk-report.html
-      #   env:
-      #    PATH: React_Todo/React_Todo/snyk-report.json
-
-
-
-      # - name: Upload HTML report
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: snyk-report
-      #     path: snyk-report.html
-
-      # - name: Fix vulnerabilities
-      #   run: npx snyk wizard --fail-on patchable
 
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
@@ -86,8 +51,14 @@ jobs:
 
       - name: Convert SARIF to HTML
         run: |
-          npm install -g sarif-converter
-          sarif-converter convert -t html -o snyk_report.html snyk.sarif
+         npm install -g sarif-converter
+         if [ $? -eq 0 ]; then
+         sarif-converter convert -t html -o snyk_report.html snyk.sarif
+         else
+         echo "Failed to install sarif-converter. Exiting..."
+          exit 1
+          fi
+ 
 
       - name: Upload SARIF report
         uses: actions/upload-artifact@v2
