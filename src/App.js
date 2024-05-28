@@ -11,14 +11,21 @@ function App() {
     fetchTodos();
   }, []);
 
-  const fetchTodos = async () => {
-    try {
-      const response = await axios.get('http://172.27.59.220:8080/todos');
+ const fetchTodos = async () => {
+  try {
+    const response = await axios.get('http://172.27.59.220:8080/todos');
+    if (Array.isArray(response.data)) {
       setTodos(response.data);
-    } catch (error) {
-      console.error('Error fetching todos:', error.message);
+    } else {
+      console.error('Invalid response format:', response.data);
+      setTodos([]); // Set todos to an empty array
     }
-  };
+  } catch (error) {
+    console.error('Error fetching todos:', error.message);
+    setTodos([]); // Set todos to an empty array
+  }
+};
+
 
   const handleAddTodo = async () => {
     try {
