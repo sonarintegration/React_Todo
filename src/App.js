@@ -13,7 +13,7 @@ function App() {
 
   const fetchTodos = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/todos');
+      const response = await axios.get('http://172.27.59.220:8080/todos');
       setTodos(response.data);
     } catch (error) {
       console.error('Error fetching todos:', error.message);
@@ -22,7 +22,7 @@ function App() {
 
   const handleAddTodo = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/todos', {
+      const response = await axios.post('http://172.27.59.220:8080/todos', {
         title,
         description,
         completed: false
@@ -46,7 +46,7 @@ function App() {
 
   const handleDeleteTodo = async (id) => {
     try {
-      await axios.delete(`http://localhost:8080/todos/${id}`);
+      await axios.delete(`http://172.27.59.220:8080/todos/${id}`);
       setTodos(todos.filter(todo => todo.id !== id));
     } catch (error) {
       console.error('Error deleting todo:', error.message);
