@@ -72,7 +72,7 @@ function App() {
         <button onClick={handleAddTodo}>Add Todo</button>
       </div>
       <ul className="todo-list">
-        {todos.map(todo => (
+        {todos && todos.map(todo => (
           <li key={todo.id} className="todo-item">
             <input
               type="checkbox"
