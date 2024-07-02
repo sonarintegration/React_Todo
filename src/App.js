@@ -11,25 +11,24 @@ function App() {
     fetchTodos();
   }, []);
 
- const fetchTodos = async () => {
-  try {
-    const response = await axios.get('http://172.27.59.220:8080/todos');
-    if (Array.isArray(response.data)) {
-      setTodos(response.data);
-    } else {
-      console.error('Invalid response format:', response.data);
+  const fetchTodos = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/todos`);
+      if (Array.isArray(response.data)) {
+        setTodos(response.data);
+      } else {
+        console.error('Invalid response format:', response.data);
+        setTodos([]); // Set todos to an empty array
+      }
+    } catch (error) {
+      console.error('Error fetching todos:', error.message);
       setTodos([]); // Set todos to an empty array
     }
-  } catch (error) {
-    console.error('Error fetching todos:', error.message);
-    setTodos([]); // Set todos to an empty array
-  }
-};
-
+  };
 
   const handleAddTodo = async () => {
     try {
-      const response = await axios.post('http://172.27.59.220:8080/todos', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/todos`, {
         title,
         description,
         completed: false
@@ -53,7 +52,7 @@ function App() {
 
   const handleDeleteTodo = async (id) => {
     try {
-      await axios.delete(`http://172.27.59.220:8080/todos/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API_URL}/todos/${id}`);
       setTodos(todos.filter(todo => todo.id !== id));
     } catch (error) {
       console.error('Error deleting todo:', error.message);
@@ -76,23 +75,4 @@ function App() {
           value={description}
           onChange={e => setDescription(e.target.value)}
         />
-        <button onClick={handleAddTodo}>Add Todo</button>
-      </div>
-      <ul className="todo-list">
-        {todos && todos.map(todo => (
-          <li key={todo.id} className="todo-item">
-            <input
-              type="checkbox"
-              checked={todo.completed}
-              onChange={() => console.log('Checkbox changed')}
-            />
-            <span>{todo.title}</span>
-            <button onClick={() => handleDeleteTodo(todo.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-export default App;
+       
