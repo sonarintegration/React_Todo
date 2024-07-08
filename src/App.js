@@ -33,20 +33,16 @@ function App() {
         description,
         completed: false
       });
-      // Check if the request was successful (status code 2xx)
       if (response.status >= 200 && response.status < 300) {
         console.log('Todo created:', response.data);
-        // Handle successful response, update UI, etc.
         setTodos([...todos, response.data]);
         setTitle('');
         setDescription('');
       } else {
-        // If the response status is not in the 2xx range, throw an error
         throw new Error(`Request failed with status ${response.status}`);
       }
     } catch (error) {
       console.error('Error adding todo:', error.message);
-      // Handle error, display message to user, etc.
     }
   };
 
@@ -75,4 +71,19 @@ function App() {
           value={description}
           onChange={e => setDescription(e.target.value)}
         />
-       
+        <button onClick={handleAddTodo}>Add Todo</button>
+      </div>
+      <ul>
+        {todos.map(todo => (
+          <li key={todo.id}>
+            <h2>{todo.title}</h2>
+            <p>{todo.description}</p>
+            <button onClick={() => handleDeleteTodo(todo.id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default App;
