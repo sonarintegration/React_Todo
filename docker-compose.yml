@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  go-app:
+    build:
+      context: ./frontend  # Update the context to point to your frontend directory
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    depends_on:
+      - backend
+      - mysql
+
+  backend:
+    build:
+      context: ./backend  # Update the context to point to your backend directory
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root  # Replace with your desired root password
+      MYSQL_DATABASE: todo_app     # Replace with your desired database name
+      MYSQL_USER: shubham          # Replace with your desired username
+      MYSQL_PASSWORD: root      # Replace with your desired password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    container_name: mysql
+volumes:
+  mysql_data:
+    driver: local
